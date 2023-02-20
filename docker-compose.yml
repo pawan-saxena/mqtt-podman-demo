@@ -1,0 +1,19 @@
+version : '3'
+services:
+  mosquitto:
+    image: docker.io/library/eclipse-mosquitto:2
+    volumes:
+      - ./mosquitto:/mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+  mqtt_podman_publisher:
+    image: docker.io/saxenapawan800/mqtt-podman-publisher:v1.0.0
+    environment:
+      - MQTT_BROKER_HOST=app_mosquitto_1
+      - MQTT_BROKER_PORT=1883
+  mqtt_podman_subscriber:
+    image: docker.io/saxenapawan800/mqtt-podman-subscriber:v1.0.0
+    environment:
+      - MQTT_BROKER_HOST=app_mosquitto_1
+      - MQTT_BROKER_PORT=1883
